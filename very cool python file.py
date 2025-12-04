@@ -1,5 +1,5 @@
 import pika, sys, os, time
-
+import xml.etree.ElementTree as ET
 
 rabbitmq_host = 'murabbitmq.ghhsdadqfycscha9.northcentralus.azurecontainer.io'
 rabbitmq_port = "5672"
@@ -18,6 +18,8 @@ parameters = pika.ConnectionParameters(
 
 def main():
 
+    # receiving message 
+    # ===========================================================================
     connection = pika.BlockingConnection(parameters)
     channel = connection.channel()
 
@@ -35,6 +37,14 @@ def main():
 
     
     connection.close()
+    # ===========================================================================
+
+    # parse message
+    # ===========================================================================
+    tree = ET.parse(body)
+    root = tree.getroot() # root will either be ADD or MULT
+    print(root)
+    # ===========================================================================
 
 if __name__ == "__main__":
     main()
