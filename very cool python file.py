@@ -44,6 +44,9 @@ def main():
     tree = ET.parse(body)
     root = tree.getroot() # root will either be ADD or MULT
     print(root)
+
+    for item in root.findall('operand'):
+        print(f"Item value: {item.text}")
     # ===========================================================================
 
 if __name__ == "__main__":
