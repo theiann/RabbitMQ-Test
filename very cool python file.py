@@ -41,12 +41,24 @@ def main():
 
     # parse message
     # ===========================================================================
-    tree = ET.parse(body)
-    root = tree.getroot() # root will either be ADD or MULT
+    tree = body.decode()
+    tree = ET.ElementTree(ET.fromstring(tree))
+    root = tree.getroot()
+    operandList = []
     print(root)
+    print("root tag:", root.tag)
 
-    for item in root.findall('operand'):
+    for item in root.findall('Operand'):
         print(f"Item value: {item.text}")
+        operandList.append(int(item.text))
+    
+    if (root.tag == "Add"):
+        result = operandList[0] + operandList[1]
+    
+    else:
+        result = operandList[0] * operandList[1]
+    
+    print("result:", result)
     # ===========================================================================
 
 if __name__ == "__main__":
