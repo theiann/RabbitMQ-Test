@@ -22,13 +22,19 @@ def main():
     channel = connection.channel()
 
     print("running")
-    def callback(ch, method, properties, body):
-        print(f" [x] Received {body}")
 
-    channel.basic_consume(queue='gadtbg_STEP0', on_message_callback=callback, auto_ack=True)
 
-    print(' [*] Waiting for messages. To exit press CTRL+C')
-    channel.start_consuming()
+    method_frame, header_frame, body = channel.basic_get(queue='gadtbg_STEP0', auto_ack=False)
+
+    if method_frame:
+        print(f"Received message: {body.decode()}")
+        
+        channel.basic_ack(method_frame.delivery_tag)
+    else:
+        print("No message returned from the queue.")
+
+    
+    connection.close()
 
 if __name__ == "__main__":
     main()
