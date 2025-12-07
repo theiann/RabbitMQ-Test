@@ -99,8 +99,15 @@ def main():
     tree = ET.ElementTree(ET.fromstring(tree))
     root = tree.getroot()
     result = -1
-    
-    print(f"Received message: {body.decode()}")
+
+    if method_frame:
+        print(f"Received message: {body.decode()}")
+        
+        channel2.basic_ack(method_frame.delivery_tag)
+    else:
+        print("No message returned from the queue.")
+
+
     print(root)
     print("root tag:", root.tag)
 
