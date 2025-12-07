@@ -7,6 +7,10 @@ rabbitmq_username = 'imchrc'
 rabbitmq_password = 'imchrc'
 rabbitmq_vhost = '/'
 
+rabbitmq_username2 = 'gadtbg'
+rabbitmq_password2 = 'gadtbg'
+credentials2 = pika.PlainCredentials(rabbitmq_username2, rabbitmq_password2)
+
 credentials = pika.PlainCredentials(rabbitmq_username, rabbitmq_password)
 
 parameters = pika.ConnectionParameters(
@@ -15,6 +19,14 @@ parameters = pika.ConnectionParameters(
     virtual_host=rabbitmq_vhost,
     credentials=credentials
 )
+
+parameters2 = pika.ConnectionParameters(
+    host=rabbitmq_host,
+    port=rabbitmq_port,
+    virtual_host=rabbitmq_vhost,
+    credentials=credentials2
+)
+
 
 def main():
 
@@ -59,7 +71,16 @@ def main():
         result = operandList[0] * operandList[1]
     
     print("result:", result)
+    body = (f"<Factorial><Operand>{result}</Operand></Factorial>")
     # ===========================================================================
+    print(body)
+
+    connection2 = pika.BlockingConnection(parameters2)
+    channel2 = connection2.channel()
+
+    channel2.basic_publish(exchange='STEP1_WORK_EXCHANGE', routing_key='gadtbg', body=body)
+    print("sent message")
+
 
 if __name__ == "__main__":
     main()
