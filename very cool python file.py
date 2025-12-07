@@ -126,6 +126,7 @@ def main():
 
         message = f"<Output><Result>{factorial}</Result><StudentA>imchrc</StudentA><StudentB>gadtbg</StudentB></Output>"
         channel2.basic_publish(exchange='STEP2_WORK_EXCHANGE', routing_key='/', body=message)
+        print(message)
         print("sent message")
     else:
         print("No factorial to compute")
