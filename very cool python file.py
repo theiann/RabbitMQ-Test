@@ -51,7 +51,7 @@ def main():
     connection.close()
     # ===========================================================================
 
-    # parse message
+    # parse message from step0
     # ===========================================================================
     tree = body.decode()
     tree = ET.ElementTree(ET.fromstring(tree))
