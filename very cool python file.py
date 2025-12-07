@@ -118,7 +118,7 @@ def main():
 
     print()
 
-    # compute factorial for result item (pulled from step1)
+    # compute factorial for result item (pulled from step1), then send message to step2
     # ===========================================================================
     if result:
         factorial = math.factorial(result)
@@ -130,9 +130,7 @@ def main():
         print("sent message")
     else:
         print("No factorial to compute")
-
     # ===========================================================================
-    
 
 if __name__ == "__main__":
     main()
