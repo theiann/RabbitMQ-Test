@@ -50,7 +50,7 @@ def main():
     
     connection.close()
     # ===========================================================================
-
+    print()
     # parse message from step0
     # ===========================================================================
     tree = body.decode()
@@ -71,8 +71,11 @@ def main():
         result = operandList[0] * operandList[1]
     
     print("result:", result)
-    body = (f"<Factorial><Operand>{result}</Operand></Factorial>")
     # ===========================================================================
+    print()
+    # push new xml message to step1
+    # ===========================================================================
+    body = (f"<Factorial><Operand>{result}</Operand></Factorial>")
     print(body)
 
     connection2 = pika.BlockingConnection(parameters2)
@@ -80,7 +83,24 @@ def main():
 
     channel2.basic_publish(exchange='STEP1_WORK_EXCHANGE', routing_key='gadtbg', body=body)
     print("sent message")
+    # ===========================================================================
+    print()
+    # parse message from step1
+    # ===========================================================================
+    method_frame, header_frame, body = channel2.basic_get(queue='gadtbg_STEP1', auto_ack=False)
 
+    tree = body.decode()
+    tree = ET.ElementTree(ET.fromstring(tree))
+    root = tree.getroot()
+    result = -1
+
+    print(root)
+    print("root tag:", root.tag)
+
+    for item in root.findall('Operand'):
+        print(f"result value: {item.text}")
+        result = int(item.text)
+    # ===========================================================================
 
 if __name__ == "__main__":
     main()
