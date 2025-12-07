@@ -3,8 +3,8 @@ import xml.etree.ElementTree as ET
 
 rabbitmq_host = 'murabbitmq.ghhsdadqfycscha9.northcentralus.azurecontainer.io'
 rabbitmq_port = "5672"
-rabbitmq_username = 'gadtbg'
-rabbitmq_password = 'gadtbg'
+rabbitmq_username = 'imchrc'
+rabbitmq_password = 'imchrc'
 rabbitmq_vhost = '/'
 
 credentials = pika.PlainCredentials(rabbitmq_username, rabbitmq_password)
@@ -26,7 +26,7 @@ def main():
     print("running")
 
 
-    method_frame, header_frame, body = channel.basic_get(queue='gadtbg_STEP0', auto_ack=False)
+    method_frame, header_frame, body = channel.basic_get(queue='imchrc_STEP0', auto_ack=False)
 
     if method_frame:
         print(f"Received message: {body.decode()}")
