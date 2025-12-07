@@ -50,7 +50,9 @@ def main():
     
     connection.close()
     # ===========================================================================
+
     print()
+
     # parse message from step0
     # ===========================================================================
     tree = body.decode()
@@ -72,7 +74,9 @@ def main():
     
     print("result:", result)
     # ===========================================================================
+
     print()
+
     # push new xml message to step1
     # ===========================================================================
     body = (f"<Factorial><Operand>{result}</Operand></Factorial>")
@@ -84,7 +88,9 @@ def main():
     channel2.basic_publish(exchange='STEP1_WORK_EXCHANGE', routing_key='gadtbg', body=body)
     print("sent message")
     # ===========================================================================
+
     print()
+
     # parse message from step1
     # ===========================================================================
     method_frame, header_frame, body = channel2.basic_get(queue='gadtbg_STEP1', auto_ack=False)
@@ -93,13 +99,20 @@ def main():
     tree = ET.ElementTree(ET.fromstring(tree))
     root = tree.getroot()
     result = -1
-
+    
+    print(f"Received message: {body.decode()}")
     print(root)
     print("root tag:", root.tag)
 
     for item in root.findall('Operand'):
         print(f"result value: {item.text}")
         result = int(item.text)
+    # ===========================================================================
+
+    print()
+
+    # compute factorial for result item (pulled from step1)
+    # ===========================================================================
     # ===========================================================================
 
 if __name__ == "__main__":
