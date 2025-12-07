@@ -1,4 +1,4 @@
-import pika, sys, os, time
+import pika, sys, os, time, math
 import xml.etree.ElementTree as ET
 
 rabbitmq_host = 'murabbitmq.ghhsdadqfycscha9.northcentralus.azurecontainer.io'
@@ -120,7 +120,18 @@ def main():
 
     # compute factorial for result item (pulled from step1)
     # ===========================================================================
+    if result:
+        factorial = math.factorial(result)
+        print(f"factorial calculated: {factorial}")
+
+        message = f"<Output><Result>{factorial}</Result><StudentA>imchrc</StudentA><StudentB>gadtbg</StudentB></Output>"
+        channel2.basic_publish(exchange='STEP2_WORK_EXCHANGE', routing_key='/', body=message)
+        print("sent message")
+    else:
+        print("No factorial to compute")
+
     # ===========================================================================
+    
 
 if __name__ == "__main__":
     main()
