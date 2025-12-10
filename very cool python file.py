@@ -125,7 +125,7 @@ def main():
         print(f"factorial calculated: {factorial}")
 
         message = f"<Output><Result>{factorial}</Result><StudentA>imchrc</StudentA><StudentB>gadtbg</StudentB></Output>"
-        channel2.basic_publish(exchange='STEP2_WORK_EXCHANGE', routing_key='/', body=message)
+        channel2.basic_publish(exchange='STEP2_WORK_EXCHANGE', routing_key='', body=message)
         print(message)
         print("sent message")
     else:
@@ -133,8 +133,5 @@ def main():
     # ===========================================================================
 
 if __name__ == "__main__":
-    main()
-
-
-
-
+    for i in range(2000):
+        main()
