@@ -118,7 +118,7 @@ def main():
 
     print()
 
-    # compute factorial for result item (pulled from step1), then send message to step2
+    # compute factorial for result item (pulled from step1)
     # ===========================================================================
     if result:
         factorial = math.factorial(result)
@@ -130,7 +130,9 @@ def main():
         print("sent message")
     else:
         print("No factorial to compute")
+    connection2.close()
     # ===========================================================================
+    
 
 if __name__ == "__main__":
     for i in range(2000):
