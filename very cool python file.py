@@ -136,4 +136,5 @@ def main():
 
 if __name__ == "__main__":
     for i in range(2000):
+        print(i+1)
         main()
